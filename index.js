@@ -29,9 +29,9 @@ function configure (cb) {
       [ 'mkdir', '-p', '/Library/Filesystems/macfuse.fs' ],
       [ 'tar', 'xzf', path.join(OSXFUSE, 'macfuse.fs.tgz'), '-C', '/Library/Filesystems/macfuse.fs' ],
       [ 'chown', '-R', 'root:wheel', '/Library/Filesystems/macfuse.fs' ],
-      [ 'chmod', '+s', '/Library/Filesystems/macfuse.fs/Contents/Resources/load_osxfuse' ],
+      [ 'chmod', '+s', '/Library/Filesystems/macfuse.fs/Contents/Resources/load_macfuse' ],
       writeConfigured,
-      [ '/Library/Filesystems/macfuse.fs/Contents/Resources/load_osxfuse' ]
+      [ '/Library/Filesystems/macfuse.fs/Contents/Resources/load_macfuse' ]
     ], cb)
 
     function writeConfigured (cb) {
