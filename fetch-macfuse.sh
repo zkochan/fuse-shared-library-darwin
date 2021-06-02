@@ -15,11 +15,9 @@ curl "$LATEST_DMG" -Lo "$OUT/macfuse-latest.dmg"
 
 [ -d "$DMG_VOLUME" ] && umount "$DMG_VOLUME"
 hdiutil attach "$OUT/macfuse-latest.dmg"
-echo "OKAY"
 pkgutil --expand-full "$DMG_VOLUME/Install macFUSE.pkg" "$OUT/unpacked"
 umount "$DMG_VOLUME"
 mkdir -p "$OUT/"
-echo "INSTALLED"
 
 cd "$OUT/unpacked/Core.pkg/Payload/Library/Filesystems/macfuse.fs"
 tar czf "$OUT/macfuse.fs.tgz" "."
