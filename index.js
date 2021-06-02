@@ -2,9 +2,9 @@ const fs = require('fs')
 const { spawn } = require('child_process')
 const path = require('path')
 
-const OSXFUSE_VERSION = '3.10.4'
-const OSXFUSE = path.join(__dirname, 'osxfuse')
-const lib = path.join(OSXFUSE, 'libosxfuse.dylib')
+const OSXFUSE_VERSION = '4.1.2'
+const OSXFUSE = path.join(__dirname, 'macfuse')
+const lib = path.join(OSXFUSE, 'libosxfuse.2.dylib')
 const include = path.join(OSXFUSE, 'include')
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
 
 function unconfigure (cb) {
   if (!cb) cb = noop
-  run([ 'rm', '-rf', '/Library/Filesystems/osxfuse.fs' ], cb)
+  run([ 'rm', '-rf', '/Library/Filesystems/macfuse.fs' ], cb)
 }
 
 function configure (cb) {
@@ -26,23 +26,23 @@ function configure (cb) {
   isConfigured(function (_, yes) {
     if (yes) return cb(null)
     runAll([
-      [ 'mkdir', '-p', '/Library/Filesystems/osxfuse.fs' ],
-      [ 'tar', 'xzf', path.join(OSXFUSE, 'osxfuse.fs.tgz'), '-C', '/Library/Filesystems/osxfuse.fs' ],
-      [ 'chown', '-R', 'root:wheel', '/Library/Filesystems/osxfuse.fs' ],
-      [ 'chmod', '+s', '/Library/Filesystems/osxfuse.fs/Contents/Resources/load_osxfuse' ],
+      [ 'mkdir', '-p', '/Library/Filesystems/macfuse.fs' ],
+      [ 'tar', 'xzf', path.join(OSXFUSE, 'macfuse.fs.tgz'), '-C', '/Library/Filesystems/macfuse.fs' ],
+      [ 'chown', '-R', 'root:wheel', '/Library/Filesystems/macfuse.fs' ],
+      [ 'chmod', '+s', '/Library/Filesystems/macfuse.fs/Contents/Resources/load_osxfuse' ],
       writeConfigured,
-      [ '/Library/Filesystems/osxfuse.fs/Contents/Resources/load_osxfuse' ]
+      [ '/Library/Filesystems/macfuse.fs/Contents/Resources/load_osxfuse' ]
     ], cb)
 
     function writeConfigured (cb) {
-      const configured = path.join('/Library/Filesystems/osxfuse.fs/configured')
+      const configured = path.join('/Library/Filesystems/macfuse.fs/configured')
       fs.writeFile(configured, OSXFUSE_VERSION, cb)
     }
   })
 }
 
 function isConfigured (cb) {
-  fs.readFile('/Library/Filesystems/osxfuse.fs/configured', 'utf-8', function (err, str) {
+  fs.readFile('/Library/Filesystems/macfuse.fs/configured', 'utf-8', function (err, str) {
     if (err && err.code !== 'ENOENT') return cb(err)
     cb(null, !!str && str.trim() === OSXFUSE_VERSION)
   })
