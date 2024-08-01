@@ -2,7 +2,7 @@ const fs = require('fs')
 const { spawn } = require('child_process')
 const path = require('path')
 
-const OSXFUSE_VERSION = '4.1.2'
+const OSXFUSE_VERSION = '4.8.0'
 const OSXFUSE = path.join(__dirname, 'macfuse')
 const lib = path.join(OSXFUSE, 'libosxfuse.2.dylib')
 const include = path.join(OSXFUSE, 'include')
