@@ -3,9 +3,9 @@ const { spawn } = require('child_process')
 const path = require('path')
 
 const OSXFUSE_VERSION = '4.1.2'
-const OSXFUSE = path.join(__dirname, 'macfuse')
+const OSXFUSE = '/usr/local/lib'
 const lib = path.join(OSXFUSE, 'libosxfuse.2.dylib')
-const include = path.join(OSXFUSE, 'include')
+const include = '/usr/local/include/fuse'
 
 module.exports = {
   lib,
