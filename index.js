@@ -5,7 +5,7 @@ const path = require('path')
 const OSXFUSE_VERSION = '4.1.2'
 const OSXFUSE = '/usr/local/include/fuse'
 const lib = path.join(OSXFUSE, 'libosxfuse.2.dylib')
-const include = path.join(OSXFUSE, 'include')
+const include = OSXFUSE
 
 module.exports = {
   lib,
